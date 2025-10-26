@@ -1,34 +1,505 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarjeta de Producto</title>
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta de Presentación - ARMIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0F1419 0%, #1C2A3A 50%, #263238 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 188, 212, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(66, 133, 244, 0.1) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: #FFFFFF;
+            border-radius: 32px;
+            box-shadow:
+                    0 8px 32px rgba(0, 188, 212, 0.15),
+                    0 16px 64px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow:
+                    0 16px 48px rgba(0, 188, 212, 0.25),
+                    0 24px 96px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #00BCD4 0%, #26C6DA 50%, #4DD0E1 100%);
+            padding: 48px 32px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -150px;
+            right: -100px;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(28, 42, 58, 0.15);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -50px;
+        }
+
+        .logo-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+        }
+
+        .logo-wrapper {
+            width: 120px;
+            height: 120px;
+            background: #FFFFFF;
+            border-radius: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.15),
+                    0 0 0 8px rgba(255, 255, 255, 0.3);
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .image{
+            border-radius: 32px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text {
+            font-size: 56px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .company-name {
+            color: #FFFFFF;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 16px;
+            text-align: center;
+            font-weight: 500;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 0.3px;
+        }
+
+        .card-content {
+            padding: 32px;
+            background: #FFFFFF;
+        }
+
+        .section-title {
+            color: #1C2A3A;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .material-icons {
+            color: #00BCD4;
+            font-size: 20px;
+        }
+
+        .description {
+            color: #546E7A;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .service-chip {
+            background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%);
+            border: 1.5px solid #00BCD4;
+            border-radius: 16px;
+            padding: 14px 16px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-chip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: left 0.5s;
+        }
+
+        .service-chip:hover::before {
+            left: 100%;
+        }
+
+        .service-chip:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 188, 212, 0.25);
+            border-color: #0097A7;
+        }
+
+        .service-icon {
+            font-size: 28px;
+            color: #00BCD4;
+            margin-bottom: 8px;
+        }
+
+        .service-name {
+            color: #1C2A3A;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .features {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .feature-badge {
+            background: linear-gradient(135deg, #4285F4 0%, #5E97F6 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+        }
+
+        .feature-badge.purple {
+            background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%);
+            box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
+        }
+
+        .feature-badge.green {
+            background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
+            box-shadow: 0 2px 8px rgba(0, 200, 83, 0.3);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 32px 32px;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .action-button.primary {
+            background: linear-gradient(135deg, #00BCD4 0%, #26C6DA 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+        }
+
+        .action-button.primary:hover {
+            background: linear-gradient(135deg, #0097A7 0%, #00BCD4 100%);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .action-button.secondary {
+            background: transparent;
+            color: #00BCD4;
+            border: 2px solid #00BCD4;
+        }
+
+        .action-button.secondary:hover {
+            background: rgba(0, 188, 212, 0.08);
+            border-color: #0097A7;
+            color: #0097A7;
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #E0E0E0, transparent);
+            margin: 20px 0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 24px 32px;
+            background: linear-gradient(135deg, #F5F9FA 0%, #E0F7FA 100%);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #00BCD4;
+            font-size: 28px;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: #546E7A;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .card-header {
+                padding: 40px 24px 24px;
+            }
+
+            .logo-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+
+            .logo-text {
+                font-size: 48px;
+            }
+
+            .company-name {
+                font-size: 24px;
+            }
+
+            .card-content {
+                padding: 24px;
+            }
+
+            .card-actions {
+                padding: 0 24px 24px;
+                flex-direction: column;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-
 <div class="container">
-<div class="row">
-<div class="col s12 m6 l4">
-<div class="card">
-<div class="card-image">
-<img src="ruta/a/tu/imagen.jpg" alt="Producto">
-<span class="card-title">Nombre del Producto</span>
-</div>
-<div class="card-content">
-<p>Descripción breve del producto. Incluye características y beneficios.</p>
-</div>
-<div class="card-action">
-<a href="#">Agregar al Carrito</a>
-<a href="#">Ver Más</a>
-</div>
-</div>
-</div>
-</div>
+    <div class="card">
+        <div class="card-header">
+            <div class="logo-container">
+                <div class="logo-wrapper">
+                    <img class = "image" src="armix.png" alt="armix_logo" width="200" height="150" >
+                </div>
+            </div>
+            <h1 class="company-name">ARMIX</h1>
+            <p class="tagline">Tecnología y Publicidad</p>
+        </div>
+
+        <div class="card-content">
+            <div class="section-title">
+                <span class="material-icons">lightbulb</span>
+                Nuestra Misión
+            </div>
+            <p class="description">
+                Construimos tu infraestructura digital y conectamos tus mensajes con soluciones tecnológicas innovadoras que impulsan el crecimiento de tu negocio.
+            </p>
+
+            <div class="section-title">
+                <span class="material-icons">build</span>
+                Servicios Principales
+            </div>
+            <div class="services-grid">
+                <div class="service-chip">
+                    <div class="material-icons service-icon">integration_instructions</div>
+                    <div class="service-name">Integración Tecnológica</div>
+                </div>
+                <div class="service-chip">
+                    <div class="material-icons service-icon">campaign</div>
+                    <div class="service-name">Publicidad Digital</div>
+                </div>
+                <div class="service-chip">
+                    <div class="material-icons service-icon">cloud_upload</div>
+                    <div class="service-name">Infraestructura Cloud</div>
+                </div>
+                <div class="service-chip">
+                    <div class="material-icons service-icon">devices</div>
+                    <div class="service-name">Desarrollo Web/App</div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <span class="material-icons">workspace_premium</span>
+                Valores
+            </div>
+            <div class="features">
+                <span class="feature-badge">Innovación Constante</span>
+                <span class="feature-badge purple">Soluciones Robustas</span>
+                <span class="feature-badge green">Integración 360°</span>
+                <span class="feature-badge">Soporte Dedicado</span>
+            </div>
+        </div>
+
+
+        <div class="card-actions">
+            <a href="#" class="action-button primary">
+                <span class="material-icons">language</span>
+                Sitio Web
+            </a>
+            <a href="#" class="action-button secondary">
+                <span class="material-icons">email</span>
+                Contacto
+            </a>
+        </div>
+    </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    // Efecto parallax suave en hover
+    const card = document.querySelector('.card');
+    const container = document.querySelector('.container');
+
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+    });
+
+    // Animación de entrada
+    window.addEventListener('load', () => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
 </body>
 </html>
